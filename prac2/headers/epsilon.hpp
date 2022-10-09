@@ -25,3 +25,7 @@ class NFA {
   void EpsilonMerge(State& first, State& second);
   void EpsilonsDelete();
 };
+std::vector<Transition> TransitionsInit(int num_of_transitions);
+std::vector<State> PlayGround(int number_of_states);
+void PrintNFAStates(NFA nfa);
+void PrintNFATransitions(NFA nfa);

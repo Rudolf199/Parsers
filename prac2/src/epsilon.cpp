@@ -1,4 +1,5 @@
 #include "../headers/epsilon.hpp"
+
 #include <iostream>
 NFA::NFA(std::vector<Transition> transitions, std::vector<State> states) {
   all_states_ = states;
@@ -33,15 +34,29 @@ void NFA::EpsilonsDelete() {
     }
   }
 }
-
-int main() {
-  std::cout << "Enter the number of states:\n";
-  int number_of_states;
-  std::cin >> number_of_states;
-  std::string state_type;
+void PrintNFATransitions(NFA nfa) {
+  std::cout << "--------------------Transitions----------------------\n";
+  std::cout << "START          PATH           END\n";
+  for (int i = 0; i < nfa.transitions_.size(); ++i) {
+    std::cout << nfa.transitions_[i].start << "      "
+              << nfa.transitions_[i].path << "      " << nfa.transitions_[i].end
+              << "\n";
+  }
+}
+void PrintNFAStates(NFA nfa) {
+  std::cout << "--------------NFA--------------\n";
+  std::cout << "\n------------------------STATES------------------\n";
+  std::cout << "NAME    INDEX     TRASH      FINAL      START\n";
+  for (int i = 0; i < nfa.all_states_.size(); ++i) {
+    std::cout << nfa.all_states_[i].name << "      " << nfa.all_states_[i].index
+              << "   " << nfa.all_states_[i].IsTrash << "          "
+              << nfa.all_states_[i].IsFinal << "           "
+              << nfa.all_states_[i].isStart << "\n";
+  }
+}
+std::vector<State> PlayGround(int number_of_states) {
+  std::string state_type, name;
   std::vector<State> states;
-  std::vector<Transition> transitions;
-  std::string name;
   for (int i = 0; i < number_of_states; ++i) {
     State state = State();
     std::cout << "Name of " << i << " state:\n";
@@ -74,16 +89,10 @@ int main() {
     state.index = i;
     states.push_back(state);
   }
-  std::cout << "\n------------------------STATES------------------\n";
-  std::cout << "NAME    INDEX     TRASH      FINAL      START\n";
-  for (int i = 0; i < number_of_states; ++i) {
-    std::cout << states[i].name << "             " << states[i].index
-              << "        " << states[i].IsTrash << "       "
-              << states[i].IsFinal << "   " << states[i].isStart << "\n";
-  }
-  std::cout << "Enter number of transitions:\n";
-  int num_of_transitions;
-  std::cin >> num_of_transitions;
+  return states;
+}
+std::vector<Transition> TransitionsInit(int num_of_transitions) {
+  std::vector<Transition> transitions;
   for (int i = 0; i < num_of_transitions; ++i) {
     Transition transition = Transition();
     std::cout << "Enter start and end indexes for transition:\n";
@@ -92,51 +101,27 @@ int main() {
     transition.start = start;
     transition.end = end;
     char path;
-    std::cout << "Enter path for " << i << "-th transition";
+    std::cout << "Enter path for " << i << "-th transition\n";
     std::cin >> path;
     transition.path = path;
     transitions.push_back(transition);
   }
-  std::cout << "--------------------Transitions----------------------\n";
-  std::cout << "START          PATH           END\n";
-  for (int i = 0; i < transitions.size(); ++i) {
-    std::cout << transitions[i].start << "      " << transitions[i].path
-              << "      " << transitions[i].end << "\n";
-  }
+  return transitions;
+}
+int main() {
+  std::cout << "Enter the number of states:\n";
+  int number_of_states;
+  std::cin >> number_of_states;
+  std::vector<State> states = PlayGround(number_of_states);
+  std::cout << "Enter number of transitions:\n";
+  int num_of_transitions;
+  std::cin >> num_of_transitions;
+  std::vector<Transition> transitions = TransitionsInit(num_of_transitions);
   NFA nfa(transitions, states);
-  std::cout << "--------------NFA--------------\n";
-  std::cout << "\n------------------------STATES------------------\n";
-  std::cout << "NAME    INDEX     TRASH      FINAL      START\n";
-  for (int i = 0; i < nfa.all_states_.size(); ++i) {
-    std::cout << nfa.all_states_[i].name << "      " << nfa.all_states_[i].index
-              << "   " << nfa.all_states_[i].IsTrash << "          "
-              << nfa.all_states_[i].IsFinal << "           "
-              << nfa.all_states_[i].isStart << "\n";
-  }
-  std::cout << "--------------------Transitions----------------------\n";
-  std::cout << "START          PATH           END\n";
-  for (int i = 0; i < nfa.transitions_.size(); ++i) {
-    std::cout << nfa.transitions_[i].start << "      "
-              << nfa.transitions_[i].path << "      " << nfa.transitions_[i].end
-              << "\n";
-  }
+  PrintNFAStates(nfa);
+  PrintNFATransitions(nfa);
   nfa.EpsilonsDelete();
-  std::cout << "--------------NEWNFA--------------\n";
-  std::cout << "\n------------------------STATES------------------\n";
-  std::cout << "NAME    INDEX     TRASH      FINAL      START\n";
-  for (int i = 0; i < nfa.all_states_.size(); ++i) {
-    std::cout << nfa.all_states_[i].name << "           "
-              << nfa.all_states_[i].index << "            "
-              << nfa.all_states_[i].IsTrash << "           "
-              << nfa.all_states_[i].IsFinal << "             "
-              << nfa.all_states_[i].isStart << "\n";
-  }
-  std::cout << "--------------------Transitions----------------------\n";
-  std::cout << "START          PATH           END\n";
-  for (int i = 0; i < nfa.transitions_.size(); ++i) {
-    std::cout << nfa.transitions_[i].start << "      "
-              << nfa.transitions_[i].path << "      " << nfa.transitions_[i].end
-              << "\n";
-  }
+  PrintNFAStates(nfa);
+  PrintNFATransitions(nfa);
   return 0;
 }
