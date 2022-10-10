@@ -37,7 +37,7 @@ void NFA::EpsilonsDelete() {
 int main() {
   std::cout << "Enter the number of states:\n";
   int number_of_states;
-  std::cin >> number_of_states;
+  std::cin >> number_of_states; // в целом сойде, но такие конструкции, как создание автомата лучше выносить в отдельноую функцию (и там же ввод)
   std::string state_type;
   std::vector<State> states;
   std::vector<Transition> transitions;
@@ -74,7 +74,7 @@ int main() {
     state.index = i;
     states.push_back(state);
   }
-  std::cout << "\n------------------------STATES------------------\n";
+  std::cout << "\n------------------------STATES------------------\n"; //такое тоже в отдельную функцию, ну и короче все куски ниже тоже, чтоб код был читаемый, а в каждой функции при желании можно было разобраться по тдельности 
   std::cout << "NAME    INDEX     TRASH      FINAL      START\n";
   for (int i = 0; i < number_of_states; ++i) {
     std::cout << states[i].name << "             " << states[i].index
