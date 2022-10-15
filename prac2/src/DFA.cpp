@@ -170,6 +170,19 @@ std::vector<State> PlayGround(int number_of_states) {
     state.index = i;
     states.push_back(state);
   }
+  int starts = 0, finals = 0;
+  for(size_t i = 0; i < states.size(); ++i){
+    if(states[i].IsFinal){
+      finals++;
+    }
+    if(states[i].isStart){
+      starts++;
+    }
+  }
+  if(starts == 0 || finals == 0){
+    std::cout<<"This NFA is menace to society\n";
+    abort();
+  }
   return states;
 }
 
