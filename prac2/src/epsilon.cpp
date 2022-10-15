@@ -98,8 +98,8 @@ std::vector<State> PlayGround(int number_of_states) {
       starts++;
     }
   }
-  if(finals == 0 || starts == 0){
-    std::cout<<"Where are the enter/exit states???\n";
+  if(starts == 0){
+    std::cout<<"Where are the enter states???\n";
     abort();
   }
   return states;
