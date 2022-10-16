@@ -1,5 +1,4 @@
 #include "../headers/epsilon.hpp"
-
 #include <iostream>
 NFA::NFA(std::vector<Transition> transitions, std::vector<State> states) {
   all_states_ = states;

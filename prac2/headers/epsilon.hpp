@@ -1,5 +1,4 @@
 #include <math.h>
-
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -29,3 +28,4 @@ std::vector<Transition> TransitionsInit(int num_of_transitions);
 std::vector<State> PlayGround(int number_of_states);
 void PrintNFAStates(NFA nfa);
 void PrintNFATransitions(NFA nfa);
+bool EpsilonsAreMerged(NFA nfa);
