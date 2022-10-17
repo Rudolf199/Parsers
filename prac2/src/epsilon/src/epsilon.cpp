@@ -1,8 +1,17 @@
-#include "../headers/epsilon.hpp"
+#include "./epsilon.hpp"
 #include <iostream>
 NFA::NFA(std::vector<Transition> transitions, std::vector<State> states) {
   all_states_ = states;
   transitions_ = transitions;
+}
+
+bool NFA::EpsilonsAreMerged(){
+  for(size_t i = 0; i < transitions_.size(); ++i){
+    if(transitions_[i].path == '$'){
+      return false;
+    }
+  }
+  return true;
 }
 void NFA::EpsilonMerge(State& first, State& second) {
   for (size_t i = 0; i < transitions_.size(); ++i) {
@@ -119,21 +128,4 @@ std::vector<Transition> TransitionsInit(int num_of_transitions) {
     transitions.push_back(transition);
   }
   return transitions;
-}
-int main() {
-  std::cout << "Enter the number of states:\n";
-  int number_of_states;
-  std::cin >> number_of_states;
-  std::vector<State> states = PlayGround(number_of_states);
-  std::cout << "Enter number of transitions:\n";
-  int num_of_transitions;
-  std::cin >> num_of_transitions;
-  std::vector<Transition> transitions = TransitionsInit(num_of_transitions);
-  NFA nfa(transitions, states);
-  PrintNFAStates(nfa);
-  PrintNFATransitions(nfa);
-  nfa.EpsilonsDelete();
-  PrintNFAStates(nfa);
-  PrintNFATransitions(nfa);
-  return 0;
 }

@@ -1,11 +1,10 @@
-#include <catch2/catch_all.hpp>
-#include <catch2/catch_test_macros.hpp>
+#include <gtest/gtest.h>
+
 #include <iostream>
 
-#include "../headers/test_epislon.hpp"
-#define CATCH_CONFIG_MAIN
+#include "../src/epsilon.hpp"
 
-TEST_CASE("Epsilons are merged", "[NFA]") {
+TEST(Epsilon_test, Epsilons_are_merged) {
   State state1 = {"0", true, false, 0, false};
   State state2 = {"1", false, false, 1, false};
   State state3 = {"2", false, true, 2, false};
@@ -19,7 +18,7 @@ TEST_CASE("Epsilons are merged", "[NFA]") {
   transitions.push_back(transition1);
   transitions.push_back(transition2);
   NFA nfa(transitions, states);
-  REQUIRE(nfa.EpsilonsAreMerged() == false);
+  EXPECT_EQ(false, nfa.EpsilonsAreMerged());
   nfa.EpsilonsDelete();
-  REQUIRE(nfa.EpsilonsAreMerged() == true);
+  EXPECT_EQ(true, nfa.EpsilonsAreMerged());
 }

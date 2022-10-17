@@ -23,9 +23,9 @@ class NFA {
   NFA(std::vector<Transition> transitions, std::vector<State> states);
   void EpsilonMerge(State& first, State& second);
   void EpsilonsDelete();
+  bool EpsilonsAreMerged();
 };
 std::vector<Transition> TransitionsInit(int num_of_transitions);
 std::vector<State> PlayGround(int number_of_states);
 void PrintNFAStates(NFA nfa);
 void PrintNFATransitions(NFA nfa);
-bool EpsilonsAreMerged(NFA nfa);

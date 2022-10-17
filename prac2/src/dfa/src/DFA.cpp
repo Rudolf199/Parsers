@@ -1,4 +1,4 @@
-#include "../headers/DFA.hpp"
+#include "./DFA.hpp"
 
 #include <iostream>
 NFA::NFA(std::vector<Transition> transitions, std::vector<State> states) {
@@ -98,6 +98,20 @@ State NFA::SingleStart() {
   start_state.IsTrash = false;
   start_state.name = name;
   return start_state;
+}
+bool DFA::IsDFA(std::string alphabet){
+  for(size_t i = 0; i < all_states_.size(); ++i){
+    int count = 0;
+    for(size_t j = 0; j < transitions_.size(); ++j){
+      if(transitions_[j].start == all_states_[i].index){
+        count++;
+      }
+    }
+    if(count > alphabet.size()){
+      return false;
+    }
+  }
+  return true;
 }
 void PrintNFATransitions(NFA nfa) {
   std::cout << "--------------------Transitions----------------------\n";
@@ -407,34 +421,4 @@ void DFA::PrintDFA() {
               << transitions_[i].path << "               "
               << transitions_[i].end << "\n";
   }
-}
-int main() {
-  std::cout << "Enter the number of states:\n";
-  int number_of_states;
-  std::cin >> number_of_states;
-  std::vector<State> states = PlayGround(number_of_states);
-  std::cout << "Enter number of transitions:\n";
-  int num_of_transitions;
-  std::cin >> num_of_transitions;
-  std::vector<Transition> transitions = TransitionsInit(num_of_transitions);
-  NFA nfa(transitions, states);
-  // NFADisplay(nfa);
-  nfa.EpsilonsDelete();
-  NFADisplay(nfa);
-  std::cout << "start count " << nfa.StartCount() << "\n";
-  if (nfa.StartCount()) {
-    nfa.SingleStartTransitions(nfa.SingleStart());
-    nfa.MergeStarts();
-  }
-  nfa.DeleteDuplicates();
-  nfa.DeleteDulls();
-  NFADisplay(nfa);
-  Table table = nfa.MakeTable();
-  PrintTable(table);
-  std::vector<State> temp_states;
-  std::vector<Transition> temp_transitions;
-  DFA dfa(temp_transitions, temp_states);
-  dfa = ConvertDFA(table);
-  dfa.PrintDFA();
-  return 0;
 }

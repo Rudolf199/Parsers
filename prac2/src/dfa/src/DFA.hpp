@@ -54,6 +54,7 @@ class DFA {
   DFA(std::vector<Transition> transitions_, std::vector<State> states);
   void DeleteDuplicates();
   void PrintDFA();
+  bool IsDFA(std::string alphabet);
 };
 DFA ConvertDFA(Table table);
 std::string Alphabet();
@@ -63,3 +64,4 @@ void PrintNFAStates(NFA nfa);
 void PrintNFATransitions(NFA nfa);
 void NFADisplay(NFA nfa);
 int FindIndex(TableNode node, std::vector<State> states);
+void PrintTable(Table table);
