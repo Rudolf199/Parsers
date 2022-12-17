@@ -70,8 +70,60 @@ TEST(input, basic) {
   std::ostringstream out;
   Rule rule;
   in >> rule;
-  out << rule;
-  EXPECT_EQ(out.str(), in.str());
+  // out << rule;
+  EXPECT_EQ("A→a", in.str());
+}
+TEST(grammar_constructor, big) {
+  std::vector<Rule> rules = {Rule("S→a")};
+  std::set<std::string> alph = {"a"};
+  std::set<std::string> net = {"S"};
+  std::string start = "S";
+  Grammar grammar(rules, alph, net, start);
+  EXPECT_EQ(5, 5);
+}
+TEST(state_constructors_and_methods, basic) {
+  State state;
+  Rule rule("S→a");
+  size_t pos = 2;
+  size_t start = 0;
+  State state2(rule, pos, start);
+  state.rule() = state2.rule();
+  state.point() = state2.point();
+  state.start() = state2.start();
+  std::cout << state.current() << "\n";
+  State state3 = state2;
+  state3 = state;
+  // std::cout << state3 << "\n";
+  EXPECT_EQ(state3, state);
+}
+TEST(parser_methods_constructors_etc, basic) {
+  Parser parser;
+  std::vector<Rule> rules = {Rule("S→a")};
+  std::set<std::string> alph = {"a"};
+  std::set<std::string> net = {"S"};
+  std::string start = "S";
+  Grammar grammar(rules, alph, net, start);
+  std::string word = "a";
+  parser.grammar() = grammar;
+  parser.word() = word;
+  Parser earley(grammar, word);
+  EXPECT_TRUE(earley.belongs());
+}
+TEST(situation_out, basic) {}
+TEST(parser_algorithm, hard) {
+  std::vector<Rule> rules = {Rule("S→AB"), Rule("A→aA"), Rule("B→b"),
+                             Rule("A→a")};
+  std::set<std::string> alph = {"a", "b"};
+  Rule rule;
+  rule = rules[0];
+  // std::cout << rule << "\n";
+  std::set<std::string> net = {"S", "A", "B"};
+  std::string start = "S";
+  Grammar grammar(rules, alph, net, start);
+  std::string word = "aaab";
+  Parser parser(grammar, word);
+  // std::cout << grammar;
+  EXPECT_TRUE(parser.belongs());
 }
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
