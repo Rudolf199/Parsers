@@ -756,6 +756,8 @@ int main() {
   bool tmp2 = chr.is_lower(str1);
   str1 = grammar_copy.remove_lower(str1);
   auto trsh = grammar_copy.get_long();
+  Chomsky chh(chr);
+  auto k = chh.ending_with("r");
   return 0;
 }
 /*S→ABCD
