@@ -746,7 +746,12 @@ int main() {
   std::vector<Rule> trash3 = grammar_copy.get_mixed();
   chrome.bring_to_cnf();
   CYK parser("aaab", chrome);
-  std::cout << parser.parse();
+  if (parser.parse()) {
+    std::cout << "YES\n\n";
+  } else {
+    std::cout << "NO\n\n";
+  }
+  // std::cout << parser.parse() << "\n";
   Chomsky chr(alphs);
   Rule rl = chr.ending_with("a");
   Rule rl2;
