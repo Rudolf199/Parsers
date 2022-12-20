@@ -233,7 +233,9 @@ void Parser::predict(size_t j) {
 int main() {
   Grammar grammar;
   std::cin >> grammar;
-  std::string end = "ab";
+  std::cout << "Enter the word\n";
+  std::string end;
+  std::cin >> end;
   Parser parser(grammar, end);
   std::string word = parser.word();
   Grammar gram;
