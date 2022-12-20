@@ -705,6 +705,7 @@ int main() {
   Chomsky chrome(grammar, false);
   chrome.bring_to_cnf();
   std::string w;
+  std::cout << "enter the word to check\n";
   std::cin >> w;
   CYK parser(w, chrome);
   if (parser.parse()) {
