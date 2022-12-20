@@ -703,6 +703,16 @@ int main() {
   Grammar grammar;
   std::cin >> grammar;
   Chomsky chrome(grammar, false);
+  chrome.bring_to_cnf();
+  std::string w;
+  std::cin >> w;
+  CYK parser(w, chrome);
+  if (parser.parse()) {
+    std::cout << "YES\n\n";
+  } else {
+    std::cout << "NO\n\n";
+  }
+  std::cout << "From now, all is for coverage\n\n\n\n---------------\n";
   Grammar grammar_copy(grammar.rules(), grammar.sigma(), grammar.neterminals(),
                        grammar.start());
   Rule rule(std::string("A→CBD"));
@@ -744,13 +754,6 @@ int main() {
   std::vector<Rule> trash = grammar_copy.ending_with("B");
   std::vector<Rule> trash2 = grammar_copy.ending_with_single("b");
   std::vector<Rule> trash3 = grammar_copy.get_mixed();
-  chrome.bring_to_cnf();
-  CYK parser("aaab", chrome);
-  if (parser.parse()) {
-    std::cout << "YES\n\n";
-  } else {
-    std::cout << "NO\n\n";
-  }
   // std::cout << parser.parse() << "\n";
   Chomsky chr(alphs);
   Rule rl = chr.ending_with("a");
