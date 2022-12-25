@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.10)
+project(parsing)
+set(SOURCE_LIB cyk.cpp)
+set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
+set(CMAKE_EXE_LINKER_FLAGS "--coverage")
+add_library(parser_lib SHARED ${SOURCE_LIB})
